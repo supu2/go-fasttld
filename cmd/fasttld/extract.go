@@ -2,7 +2,8 @@ package fasttld
 
 import (
 	"log"
-
+	"encoding/json" // Import the encoding/json package
+	"fmt"
 	"github.com/elliotwutingfeng/go-fasttld"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
@@ -32,8 +33,14 @@ fasttld extract abc.example.com:5000/a/path
 			color.New(color.FgHiRed, color.Bold).Print("Error: ")
 			color.New(color.FgHiWhite).Println(err)
 		}
-		fasttld.PrintRes(args[0], res)
-	},
+		// Convert the response to JSON
+		jsonRes, err := json.Marshal(res)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// Print the JSON response
+		fmt.Println(string(jsonRes))	},
 }
 
 func init() {
